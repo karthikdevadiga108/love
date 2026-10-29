@@ -85,14 +85,19 @@ body{
     font-weight:bold;
 }
 
-.slide-img{
+.screen{
     width:100vw;
     height:100vh;
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
-    object-position:center;
-    background:black;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
 }
 
 .heart-btn{
@@ -187,19 +192,14 @@ Open
 
 <div id="slideScreen" class="screen">
 
-<img
-id="slideImage"
-class="slide-img"
-src="">
+    <div
+        id="heartButton"
+        class="heart-btn"
+        onclick="nextSlide()">
 
-<div
-id="heartButton"
-class="heart-btn"
-onclick="nextSlide()">
+        ❤️ Click Here
 
-❤️ Click Here
-
-</div>
+    </div>
 
 </div>
 
@@ -233,11 +233,9 @@ NO
 
 <!-- FINAL PAGE -->
 
-<div id="finalScreen" class="screen">
-
-<img
-src="images/image8.jpeg"
-class="slide-img">
+<div id="finalScreen"
+class="screen"
+style="background-image:url('images/image8.jpeg')">
 
 </div>
 
@@ -247,7 +245,6 @@ class="slide-img">
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycby85GsF15Kp5FuZIX5JZTlngsDcKhkOPBrnaGUXMnHtfjUCBo8e_-FCOUNNksnFO1RqTA/exec";
-
 /* SLIDES */
 
 const slides = [
@@ -350,21 +347,22 @@ loadSlide();
 
 function loadSlide(){
 
-document
-.getElementById("slideImage")
-.src = slides[currentSlide];
+    document
+    .getElementById("slideScreen")
+    .style.backgroundImage =
+    `url('${slides[currentSlide]}')`;
 
-document
-.getElementById("heartButton")
-.style.display = "none";
+    document
+    .getElementById("heartButton")
+    .style.display = "none";
 
-setTimeout(() => {
+    setTimeout(() => {
 
-document
-.getElementById("heartButton")
-.style.display = "block";
+        document
+        .getElementById("heartButton")
+        .style.display = "block";
 
-},2000);
+    },2000);
 
 }
 
