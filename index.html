@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +17,9 @@
 
 body{
     overflow:hidden;
-    background:black;
 }
+
+/* COMMON SCREEN */
 
 .screen{
     width:100vw;
@@ -27,23 +28,23 @@ body{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    position:relative;
-    overflow:hidden;
     background-size:cover;
     background-position:center;
-    background-repeat:no-repeat;
+    position:relative;
 }
 
 .active{
     display:flex;
 }
 
+/* LOGIN */
+
 .login-box{
     background:rgba(255,255,255,0.15);
     backdrop-filter:blur(10px);
     padding:30px;
     border-radius:20px;
-    width:320px;
+    width:300px;
     text-align:center;
 }
 
@@ -71,6 +72,8 @@ body{
     cursor:pointer;
 }
 
+/* POPUP */
+
 .popup{
     position:fixed;
     top:20px;
@@ -85,27 +88,25 @@ body{
     font-weight:bold;
 }
 
+/* SLIDE */
+
 .slide-img{
-    width:100vw;
-    height:100vh;
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
-    object-position:center;
-    background:black;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .heart-btn{
     position:absolute;
     top:50%;
-    right:20px;
+    right:25px;
     transform:translateY(-50%);
     display:none;
-    background:white;
-    padding:12px 15px;
-    border-radius:25px;
+    background:rgba(255,255,255,0.9);
+    padding:12px;
+    border-radius:20px;
     cursor:pointer;
-    font-weight:bold;
+    font-size:18px;
     animation:bounce 1s infinite;
 }
 
@@ -115,37 +116,40 @@ body{
     }
 }
 
+/* QUESTION */
+
 .question-box{
     text-align:center;
     color:white;
-    background:rgba(0,0,0,0.4);
-    backdrop-filter:blur(5px);
-    padding:30px;
-    border-radius:20px;
 }
 
 .question-box h1{
-    font-size:clamp(28px,5vw,42px);
-    margin-bottom:25px;
+    margin-bottom:30px;
+    font-size:42px;
 }
 
 .question-box button{
     padding:15px 30px;
     margin:10px;
+    font-size:18px;
     border:none;
     border-radius:15px;
-    font-size:18px;
     cursor:pointer;
 }
 
 .yes{
-    background:#4CAF50;
+    background:#4caf50;
     color:white;
 }
 
 .no{
-    background:#F44336;
+    background:#f44336;
     color:white;
+}
+
+.end-text{
+    color:white;
+    font-size:32px;
 }
 
 </style>
@@ -153,13 +157,12 @@ body{
 
 <body>
 
-<div id="popup" class="popup"></div>
+<div class="popup" id="popup"></div>
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN -->
 
-<div id="loginScreen"
-class="screen active"
-style="background-image:url('images/image1.jpeg')">
+<div id="loginScreen" class="screen active"
+style="background-image:url('images/image1.jpg')">
 
 <div class="login-box">
 
@@ -183,15 +186,14 @@ Open
 
 </div>
 
-<!-- SLIDESHOW -->
+<!-- SLIDES -->
 
 <div id="slideScreen" class="screen">
 
 
 
-<div
+<div class="heart-btn"
 id="heartButton"
-class="heart-btn"
 onclick="nextSlide()">
 
 ❤️ Click Here
@@ -200,11 +202,11 @@ onclick="nextSlide()">
 
 </div>
 
-<!-- QUESTION PAGE -->
+<!-- QUESTION -->
 
 <div id="questionScreen"
 class="screen"
-style="background-image:url('images/image7.jpeg')">
+style="background-image:url('images/image7.jpg')">
 
 <div class="question-box">
 
@@ -215,24 +217,29 @@ Will you be my wife?🥺💕
 <button
 class="yes"
 onclick="yesClicked()">
+
 YES
+
 </button>
 
 <button
 class="no"
 onclick="noClicked()">
+
 NO
+
 </button>
 
 </div>
 
 </div>
 
-<!-- FINAL PAGE -->
+<!-- FINAL -->
 
-<div id="finalScreen" class="screen">
+<div id="finalScreen"
+class="screen">
 
-images/image8.jpeg
+images/image8.jpg
 
 </div>
 
@@ -241,35 +248,33 @@ images/image8.jpeg
 /* GOOGLE SHEET URL */
 
 const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycby85GsF15Kp5FuZIX5JZTlngsDcKhkOPBrnaGUXMnHtfjUCBo8e_-FCOUNNksnFO1RqTA/exec";
+"PASTE_YOUR_APPS_SCRIPT_URL_HERE";
 
 /* SLIDES */
 
 const slides = [
-"images/image2.jpeg",
-"images/image3.jpeg",
-"images/image4.jpeg",
-"images/image5.jpeg",
-"images/image6.jpeg"
+"images/image2.jpg",
+"images/image3.jpg",
+"images/image4.jpg",
+"images/image5.jpg",
+"images/image6.jpg"
 ];
 
 let currentSlide = 0;
 
-/* POPUPS */
+/* POPUP */
 
-function showPopup(message){
+function showPopup(msg){
 
 const popup =
 document.getElementById("popup");
 
-popup.innerHTML = message;
+popup.innerHTML = msg;
 
 popup.style.display = "block";
 
-setTimeout(() => {
-
+setTimeout(()=>{
 popup.style.display = "none";
-
 },1000);
 
 }
@@ -291,41 +296,35 @@ document.getElementById("password")
 .toLowerCase();
 
 const validUser =
-username === "gunda" ||
-username === "malini";
+username==="gunda" ||
+username==="malini";
 
 const validPass =
-password === "bubbu";
+password==="bubbu";
 
 if(!validUser || !validPass){
 
 showPopup(
-"username starts with M/G and password with B"
+"Username starts with M/G and Password with B"
 );
 
 return;
 
 }
 
-/* SAVE LOGIN */
+/* SAVE TO GOOGLE SHEET */
 
 fetch(SCRIPT_URL,{
-
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
 username:username,
 password:password,
 timestamp:new Date().toLocaleString()
-
 })
-
-}).catch(error => console.log(error));
+}).catch(err=>console.log(err));
 
 document
 .getElementById("loginScreen")
@@ -335,29 +334,27 @@ document
 .getElementById("slideScreen")
 .classList.add("active");
 
-currentSlide = 0;
-
 loadSlide();
 
 }
 
-/* LOAD IMAGE */
+/* LOAD SLIDE */
 
 function loadSlide(){
 
-document
-.getElementById("slideImage")
-.src = slides[currentSlide];
+document.getElementById(
+"slideImage"
+).src = slides[currentSlide];
 
-document
-.getElementById("heartButton")
-.style.display = "none";
+document.getElementById(
+"heartButton"
+).style.display = "none";
 
-setTimeout(() => {
+setTimeout(()=>{
 
-document
-.getElementById("heartButton")
-.style.display = "block";
+document.getElementById(
+"heartButton"
+).style.display = "block";
 
 },2000);
 
@@ -406,7 +403,7 @@ showPopup(
 "I LOVE YOU😘😍❤️"
 );
 
-setTimeout(() => {
+setTimeout(()=>{
 
 document
 .getElementById("questionScreen")
@@ -416,9 +413,14 @@ document
 .getElementById("finalScreen")
 .classList.add("active");
 
-setTimeout(() => {
+setTimeout(()=>{
 
-window.location.href = "about:blank";
+try{
+window.close();
+}catch(e){}
+
+document.body.innerHTML =
+"<div style='display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;font-size:40px;'>❤️ THE END ❤️</div>";
 
 },5000);
 
